@@ -567,7 +567,6 @@ if __name__ == '__main__':
 
     num_batches = math.ceil(num_samples / batch_size)
     ctx = mx.gpu(int(args.gpus))
-    ctx = mx.cpu()
     checkpoint_period = 1
     use_visdom = False
     log_file = args.log_file
