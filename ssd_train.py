@@ -454,11 +454,13 @@ class SSD(gluon.HybridBlock):
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a Single-shot detection network')
     parser.add_argument('--train-path', dest='train_path', help='train record to use',
-                        default=os.path.join(os.getcwd(), 'data', 'VOC0712rec', 'train.rec'), type=str)
+                        # default=os.path.join(os.getcwd(), 'data', 'VOC0712rec', 'train.rec'), type=str)
+                        default=os.path.expanduser("~/datasets/voc/train.rec"), type=str)
     parser.add_argument('--train-list', dest='train_list', help='train list to use',
                         default="", type=str)
     parser.add_argument('--val-path', dest='val_path', help='validation record to use',
-                        default=os.path.join(os.getcwd(), 'data', 'VOC0712rec', 'val.rec'), type=str)
+                        # default=os.path.join(os.getcwd(), 'data', 'VOC0712rec', 'val.rec'), type=str)
+                        default=os.path.expanduser("~/datasets/voc/val.rec"), type=str)
     parser.add_argument('--val-list', dest='val_list', help='validation list to use',
                         default="", type=str)
     parser.add_argument('--network', dest='network', type=str, default='vgg16_reduced',
@@ -565,6 +567,7 @@ if __name__ == '__main__':
 
     num_batches = math.ceil(num_samples / batch_size)
     ctx = mx.gpu(int(args.gpus))
+    ctx = mx.cpu()
     checkpoint_period = 10
     use_visdom = True
     log_file = args.log_file
@@ -613,7 +616,7 @@ if __name__ == '__main__':
     # net.hybridize()
 
     # freeze several layers
-    net.collect_params('.*(vgg16_reduced_relu4_3_conv1_|vgg16_reduced_relu4_3_conv2_).*').setattr('grad_req', 'null')
+    # net.collect_params('.*(vgg16_reduced_relu4_3_conv1_|vgg16_reduced_relu4_3_conv2_).*').setattr('grad_req', 'null')
     # finetune mode
     # net.collect_params('.*(bias)$').setattr('lr_mult', 2)
     # net.collect_params('.*(vgg16_reduced).*(bias)$').setattr('lr_mult', 1)
