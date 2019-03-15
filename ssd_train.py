@@ -615,7 +615,7 @@ if __name__ == '__main__':
     # net.hybridize()
 
     # freeze several layers
-    # net.collect_params('.*(vgg16_reduced_relu4_3_conv1_|vgg16_reduced_relu4_3_conv2_).*').setattr('grad_req', 'null')
+    net.collect_params('.*(vgg16_reduced_relu4_3_conv1_|vgg16_reduced_relu4_3_conv2_).*').setattr('grad_req', 'null')
     # finetune mode
     # net.collect_params('.*(bias)$').setattr('lr_mult', 2)
     # net.collect_params('.*(vgg16_reduced).*(bias)$').setattr('lr_mult', 1)
